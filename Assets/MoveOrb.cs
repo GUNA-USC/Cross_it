@@ -35,6 +35,15 @@ public class MoveOrb : MonoBehaviour
             laneNum += 1;
         }
     }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if(other.gameObject.tag == "Lethal")
+        {
+            Destroy(gameObject);
+        }
+    }
+
     IEnumerator stopSlide()
     {
         yield return new WaitForSeconds(0.5f);//hold the speed for 0.5 second;f for float; So distance is 2*0.5 = 1.
