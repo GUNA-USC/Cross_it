@@ -42,6 +42,10 @@ public class MoveOrb : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        if(other.gameObject.name == "Capsule")
+        {
+            Destroy(gameObject);
+        }
     }
 
     IEnumerator stopSlide()
