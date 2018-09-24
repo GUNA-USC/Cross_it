@@ -64,3 +64,4 @@ sysinfo.txt
 *.unitypackage
 
 .collabignore
+/iOS
