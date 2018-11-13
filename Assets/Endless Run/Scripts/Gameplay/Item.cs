@@ -20,7 +20,7 @@ public class Item : MonoBehaviour {
 	public bool itemActive;
 
 	public enum TypeItem{
-		Null, Coin, Obstacle, Obstacle_Roll, ItemJump, ItemSprint, ItemMagnet, ItemMultiply,Random
+		Null, Coin, Obstacle, Obstacle_Roll, ItemJump, ItemSprint, ItemMagnet, ItemMultiply, Random
 	}
 
 	public TypeItem typeItem;
@@ -88,7 +88,7 @@ public class Item : MonoBehaviour {
 						HideObj ();
 						initEffect (effectHit);
 					} else if (i == 1) {
-						Controller.instace.Sprint (itemEffectValue, duration);
+						Controller.instace.Sprint (40, 10);
 						//Play sfx when get item
 						SoundManager.instance.PlayingSound ("GetItem");
 						HideObj ();
