@@ -7,7 +7,7 @@ using UnityEngine;
 using System.Collections;
 
 public class Item : MonoBehaviour {
-	
+
 	public float scoreAdd; //add money if item = coin
 	public int decreaseLife; //decrease life if item = obstacle 
 	public int itemID; //item id
@@ -15,25 +15,25 @@ public class Item : MonoBehaviour {
 	public float itemEffectValue; // effect value(if item star = speed , if item multiply = multiply number)
 	public ItemRotate itemRotate; // rotate item
 	public GameObject effectHit; // effect when hit item
-	
+
 	[HideInInspector]
 	public bool itemActive;
-	
+
 	public enum TypeItem{
-		Null, Coin, Obstacle, Obstacle_Roll, ItemJump, ItemSprint, ItemMagnet, ItemMultiply
+		Null, Coin, Obstacle, Obstacle_Roll, ItemJump, ItemSprint, ItemMagnet, ItemMultiply,Random
 	}
-	
+
 	public TypeItem typeItem;
-	
+
 	[HideInInspector]
 	public bool useAbsorb = false;
-	
+
 	public static Item instance;
-	
+
 	void Start(){
-		instance = this;	
+		instance = this; 
 	}
-	
+
 	//Set item effect
 	public void ItemGet(){
 		if(GameAttribute.gameAttribute.deleyDetect == false){
@@ -76,10 +76,38 @@ public class Item : MonoBehaviour {
 				SoundManager.instance.PlayingSound("GetItem");
 				HideObj();
 				initEffect(effectHit);
+			}else if(typeItem == TypeItem.Random){
+				if (Controller.instace.isRoll == true) {
+					System.Random ran = new System.Random ();
+					int i = ran.Next (3);
+					if (i == 0) {
+						//typeItem = TypeItem.ItemMagnet;
+						Controller.instace.JumpDouble (10);
+						//Play sfx when get item
+						SoundManager.instance.PlayingSound ("GetItem");
+						HideObj ();
+						initEffect (effectHit);
+					} else if (i == 1) {
+						Controller.instace.Sprint (itemEffectValue, duration);
+						//Play sfx when get item
+						SoundManager.instance.PlayingSound ("GetItem");
+						HideObj ();
+						initEffect (effectHit);
+					} else if (i == 2) {
+						Controller.instace.Magnet (10);
+						//Play sfx when get item
+						SoundManager.instance.PlayingSound ("GetItem");
+						HideObj ();
+						initEffect (effectHit);
+					}
+				}
 			}
 		}
 	}
-	
+
+
+
+
 	//Coin method
 	private void HitCoin(){
 		if(Controller.instace.isMultiply == false){
@@ -90,7 +118,7 @@ public class Item : MonoBehaviour {
 		initEffect(effectHit);
 		HideObj();
 	}
-	
+
 	//Obstacle method
 	private void HitObstacle(){
 		if(GameAttribute.gameAttribute.ageless == false){
@@ -101,17 +129,17 @@ public class Item : MonoBehaviour {
 				HideObj();
 				GameAttribute.gameAttribute.ActiveShakeCamera();
 			}
-			
+
 		}
 	}
-	
+
 	//Spawn effect method
 	private void initEffect(GameObject prefab){
 		GameObject go = (GameObject) Instantiate(prefab, Controller.instace.transform.position, Quaternion.identity);
 		go.transform.parent = Controller.instace.transform;
-		go.transform.localPosition = new Vector3(go.transform.localPosition.x, go.transform.localPosition.y+0.5f, go.transform.localPosition.z);	
+		go.transform.localPosition = new Vector3(go.transform.localPosition.x, go.transform.localPosition.y+0.5f, go.transform.localPosition.z); 
 	}
-	
+
 	//Magnet method
 	public IEnumerator UseAbsorb(GameObject targetObj){
 		bool isLoop = true;
@@ -119,7 +147,7 @@ public class Item : MonoBehaviour {
 		while(isLoop){
 			this.transform.position = Vector3.Lerp(this.transform.position, targetObj.transform.position, GameAttribute.gameAttribute.speed*2f * Time.smoothDeltaTime);
 			if(Vector3.Distance(this.transform.position, targetObj.transform.position) < 0.6f){
-				isLoop = false;	
+				isLoop = false; 
 				SoundManager.instance.PlayingSound("GetCoin");
 				HitCoin();
 			}
@@ -129,14 +157,14 @@ public class Item : MonoBehaviour {
 		StopCoroutine("UseAbsorb");
 		yield return 0;
 	}
-	
+
 	public void HideObj(){
 		if(useAbsorb == false){
 			this.transform.parent = null;
 			this.transform.localPosition = new Vector3(-100,-100,-100);
 		}
 	}
-	
+
 	public void Reset(){
 		itemActive = false;
 		this.transform.position = new Vector3(-100,-100,-100);
