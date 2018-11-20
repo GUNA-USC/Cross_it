@@ -53,6 +53,7 @@ public class Item : MonoBehaviour {
 				}
 			}else if(typeItem == TypeItem.ItemSprint){
 				Controller.instace.Sprint(itemEffectValue,duration);
+                //Debug.Log(itemEffectValue);
 				//Play sfx when get item
 				SoundManager.instance.PlayingSound("GetItem");
 				HideObj();
@@ -77,9 +78,10 @@ public class Item : MonoBehaviour {
 				HideObj();
 				initEffect(effectHit);
 			}else if(typeItem == TypeItem.Random){
-				if (Controller.instace.isRoll == true) {
-					System.Random ran = new System.Random ();
-					int i = ran.Next (3);
+				if (Controller.instace.isRoll == true && GameAttribute.gameAttribute.coin>=50) {
+                    GameAttribute.gameAttribute.coin -= 50;
+                    System.Random ran = new System.Random ();
+					int i = ran.Next (4);
 					if (i == 0) {
 						//typeItem = TypeItem.ItemMagnet;
 						Controller.instace.JumpDouble (10);
@@ -99,7 +101,13 @@ public class Item : MonoBehaviour {
 						SoundManager.instance.PlayingSound ("GetItem");
 						HideObj ();
 						initEffect (effectHit);
-					}
+                    } else if(i==3){
+                        Controller.instace.Sprint(20, 10);
+                        //Play sfx when get item
+                        SoundManager.instance.PlayingSound("GetItem");
+                        HideObj();
+                        initEffect(effectHit);
+                    }
 				}
 			}
 		}

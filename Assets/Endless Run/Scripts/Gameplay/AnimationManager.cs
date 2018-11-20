@@ -17,7 +17,7 @@ public class AnimationManager : MonoBehaviour {
 	}
 	
 	//AnimationSet
-	public AnimationSet run, turnLeft, turnRight, jumpUp, jumpLoop, jumpDown, roll, dead;
+	public AnimationSet run, turnLeft, turnRight, jumpUp, jumpLoop, jumpDown, roll, dead, moveItem;
 	
 	
 	//Delegate update function
