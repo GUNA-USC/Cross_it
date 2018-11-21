@@ -324,9 +324,9 @@ public class PatternSystem : MonoBehaviour {
 				GameObject go = (GameObject)Instantiate(building_Pref[i], posStart, Quaternion.identity);
 				go.name = "Building["+i+"]["+j+"]";
 				building_Obj.Add(go);
-//				 Building building = go.GetComponent<Building>();
-//				 building.buildIndex = i;
-//				 building_Script.Add(building);
+				Building building = go.GetComponent<Building>();
+				building.buildIndex = i;
+				building_Script.Add(building);
 				j++;
 				yield return 0;
 			}
