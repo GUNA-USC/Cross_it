@@ -78,7 +78,7 @@ public class Item : MonoBehaviour {
 				HideObj();
 				initEffect(effectHit);
 			}else if(typeItem == TypeItem.Random){
-				if (Controller.instace.isRoll == true && GameAttribute.gameAttribute.coin>=50) {
+				if (Controller.instace.isRoll && GameAttribute.gameAttribute.coin>=50) {
                     GameAttribute.gameAttribute.coin -= 50;
                     System.Random ran = new System.Random ();
 					int i = ran.Next (4);
